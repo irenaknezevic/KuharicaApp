@@ -12,17 +12,81 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="16dp"
         android:text="SASTOJCI:"/>
 
+    <EditText
+        android:id="@+id/etSastojak"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnDodajSastojak"
+        app:layout_constraintTop_toBottomOf="@+id/tvSastojci"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="Unesite sastojak" />
+
     <Button
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintStart_toEndOf="@+id/tvSastojci"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
+        android:id="@+id/btnDodajSastojak"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSastojci"
+        android:layout_marginRight="15dp"
+        android:text="DODAJ"/>
+
+    <ListView
+        android:id="@+id/listaSastojaka"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSastojak"
+        android:layout_marginTop="10dp"/>
+
+    <View
+        android:id="@+id/linija2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toBottomOf="@+id/listaSastojaka"
+        android:layout_marginTop="20dp"
+        android:background="#0a0a0a" />
+
+    <TextView
+        android:id="@+id/tvKoraci"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linija2"
+        android:text="KORACI:"
         android:layout_marginLeft="16dp"
-        android:text="+"/>
+        android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/etKorak"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnDodajKorak"
+        app:layout_constraintTop_toBottomOf="@+id/tvKoraci"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="Uneiste korak" />
+
+    <Button
+        android:id="@+id/btnDodajKorak"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvKoraci"
+        android:layout_marginRight="15dp"
+        android:text="DODAJ" />
+
+    <ListView
+        android:id="@+id/listaKoraka"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDodajKorak"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
