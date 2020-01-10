@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/dodaj"
-        android:layout_width="147dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +36,25 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
         />
+
+    <EditText
+        android:id="@+id/etIme"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trazilica"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:hint="ime"/>
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etIme"
+        android:layout_marginRight="20dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mojRecycler"

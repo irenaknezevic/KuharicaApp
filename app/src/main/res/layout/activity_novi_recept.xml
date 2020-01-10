@@ -7,18 +7,39 @@
     tools:context=".NoviRecept">
 
     <TextView
-        android:id="@+id/tvSastojci"
+        android:id="@+id/tvNazivJela"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="16dp"
+        android:text="NAZIV JELA:"/>
+
+    <EditText
+        android:id="@+id/etNazivJela"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNazivJela"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="Naziv jela"/>
+
+    <TextView
+        android:id="@+id/tvSastojci"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNazivJela"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
         android:text="SASTOJCI:"/>
 
     <EditText
         android:id="@+id/etSastojak"
-        android:layout_width="230dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnDodajSastojak"
@@ -29,7 +50,7 @@
 
     <Button
         android:id="@+id/btnDodajSastojak"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSastojci"
@@ -39,10 +60,10 @@
     <ListView
         android:id="@+id/listaSastojaka"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSastojak"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp" />
 
     <View
         android:id="@+id/linija2"
@@ -64,7 +85,7 @@
 
     <EditText
         android:id="@+id/etKorak"
-        android:layout_width="230dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnDodajKorak"
@@ -75,7 +96,7 @@
 
     <Button
         android:id="@+id/btnDodajKorak"
-        android:layout_width="110dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvKoraci"
@@ -85,7 +106,7 @@
     <ListView
         android:id="@+id/listaKoraka"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDodajKorak"/>
 
