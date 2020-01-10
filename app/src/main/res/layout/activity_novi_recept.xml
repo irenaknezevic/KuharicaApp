@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:text="NAZIV JELA:"/>
 
@@ -60,7 +60,7 @@
     <ListView
         android:id="@+id/listaSastojaka"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSastojak"
         android:layout_marginTop="10dp" />
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvKoraci"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:hint="Uneiste korak" />
+        android:hint="Unesite korak" />
 
     <Button
         android:id="@+id/btnDodajKorak"
@@ -106,8 +106,18 @@
     <ListView
         android:id="@+id/listaKoraka"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDodajKorak"/>
+
+    <Button
+        android:id="@+id/btnSpremiRecept"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/listaKoraka"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:text="SPREMI"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
