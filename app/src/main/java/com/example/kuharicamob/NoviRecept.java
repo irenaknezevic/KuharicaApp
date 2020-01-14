@@ -1,39 +1,35 @@
 package com.example.kuharicamob;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class NoviRecept extends AppCompatActivity {
 
-    ListView listaSastojaka;
-    ListView listaKoraka;
-    ArrayList<String> lista;
+    RecyclerViewAdapter adapterSastojci;
+    RecyclerViewAdapter adapterKoraci;
+    ArrayList<String> lSastojci;
     ArrayList<String> lKoraci;
     Button btnDodajSastojak;
     Button btnDodajKorak;
     EditText etSastojak;
     EditText etKorak;
-    ListAdapter arrayAdapter;
-    ArrayAdapter<String> arrayAdapterKoraci;
     EditText etNazivJela;
     Button btnSpremiRecept;
     DatabaseReference reff;
-    DatabaseReference sastojci;
-    DatabaseReference koraci;
     Recept recept;
 
     @Override
@@ -41,22 +37,21 @@ public class NoviRecept extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novi_recept);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         etNazivJela = (EditText) findViewById(R.id.etNazivJela);
 
-        listaSastojaka = (ListView)findViewById(R.id.listaSastojaka);
         btnDodajSastojak = (Button) findViewById(R.id.btnDodajSastojak);
         etSastojak = (EditText) findViewById(R.id.etSastojak);
 
-        listaKoraka = (ListView) findViewById(R.id.listaKoraka);
         btnDodajKorak = (Button) findViewById(R.id.btnDodajKorak);
         etKorak = (EditText) findViewById(R.id.etKorak);
 
-        lista = new ArrayList<String>();
-        lKoraci = new ArrayList<String>();
+        lSastojci = new ArrayList<>();
+        lKoraci = new ArrayList<>();
 
-        arrayAdapter = new ListAdapter(getApplicationContext(), lista);
-//        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, lista);
-        arrayAdapterKoraci = new ListAdapter(getApplicationContext(), lKoraci);
+        SetupRecyclerView(R.id.recyclerViewSastojci, lSastojci);
+        SetupRecyclerView(R.id.recyclerViewKoraci, lKoraci);
 
         btnDodajSastojak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,9 +59,8 @@ public class NoviRecept extends AppCompatActivity {
                 String sastojak = etSastojak.getText().toString();
 
                 if(!sastojak.matches("")) {
-                    lista.add(sastojak);
-                    arrayAdapter.notifyDataSetChanged();
-                    listaSastojaka.setAdapter(arrayAdapter);
+                    lSastojci.add(sastojak);
+                    adapterSastojci.notifyDataSetChanged();
 
                     etSastojak.setText("");
                 }
@@ -83,8 +77,7 @@ public class NoviRecept extends AppCompatActivity {
 
                 if(!korak.matches("")) {
                     lKoraci.add(korak);
-                    listaKoraka.setAdapter(arrayAdapterKoraci);
-                    arrayAdapterKoraci.notifyDataSetChanged();
+                    adapterKoraci.notifyDataSetChanged();
 
                     etKorak.setText("");
                 }
@@ -103,14 +96,14 @@ public class NoviRecept extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!etNazivJela.getText().toString().matches("")) {
-                    recept.setNazivJela(etNazivJela.getText().toString().trim());
+                    recept.setNazivJela(etNazivJela.getText().toString());
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Unesite naziv jela!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!lista.isEmpty() && !lKoraci.isEmpty()) {
-                    recept.setListaSastojci(lista);
+                if(!lSastojci.isEmpty() && !lKoraci.isEmpty()) {
+                    recept.setListaSastojci(lSastojci);
                     recept.setListaKoraci(lKoraci);
                 }
                 else {
@@ -121,5 +114,19 @@ public class NoviRecept extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void SetupRecyclerView(int resource, ArrayList<String> lista) {
+        RecyclerView rv = findViewById(resource);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(lista);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        if(resource == R.id.recyclerViewSastojci){
+            adapterSastojci = adapter;
+        }
+        else {
+            adapterKoraci = adapter;
+        }
     }
 }

@@ -16,27 +16,10 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnDodaj;
 
-    EditText etUnos;
-    Button btnSave;
-    DatabaseReference reff;
-    Member member;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        etUnos = (EditText) findViewById(R.id.etIme);
-        btnSave = (Button) findViewById(R.id.btnSave);
-        member = new Member();
-        reff = FirebaseDatabase.getInstance().getReference().child("Member");
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                member.setIme(etUnos.getText().toString().trim());
-                reff.push().setValue(member);
-            }
-        });
 
         btnDodaj = (Button)findViewById(R.id.dodaj);
         btnDodaj.setOnClickListener(new View.OnClickListener() {
