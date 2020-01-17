@@ -13,6 +13,8 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:layout_editor_absoluteY="6dp" />
 
@@ -26,43 +28,24 @@
         android:layout_marginTop="8dp"
         android:text="Dodaj recept"/>
 
-    <SearchView
+    <EditText
         android:id="@+id/trazilica"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dodaj"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
-        />
-
-    <EditText
-        android:id="@+id/etIme"
-        android:layout_width="500dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trazilica"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:hint="ime"/>
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etIme"
-        android:layout_marginRight="20dp"/>
+        android:hint="Pretraži"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mojRecycler"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/dodaj"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="26dp"
-        android:layout_marginLeft="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

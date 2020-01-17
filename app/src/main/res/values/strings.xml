@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Studentska kuharica</string>
+    <string name="dodajStavku">Dodaj</string>
+    <string name="spremi">Spremi</string>
+    <string name="dodajRecept">Dodaj recept</string>
+    <string name="hintPretraga">Pretraži</string>
 </resources>
