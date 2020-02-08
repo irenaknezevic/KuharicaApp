@@ -2,70 +2,59 @@ package com.example.kuharicamob;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
-    EditText search;
+    androidx.appcompat.widget.SearchView search;
     Recept recept = new Recept();
     ArrayList<Recept> receptiList = new ArrayList<>();
     ArrayList<Recept> receptiQueryList = new ArrayList<>();
+    ArrayList<String> listaId = new ArrayList<>();
+    ArrayList<String> queryListaId = new ArrayList<>();
     final String TAG = "MainActivityLog";
 
-    Button btnDodaj;
+    FloatingActionButton btnDodaj;
+
+    ImageView ivFavoriti;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String MY_PREFERENCES = "USER_DATA";
+        SharedPreferences sharedPreferences = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+        if(sharedPreferences.getString("user_id", "emptyString").matches("emptyString"))
+        {
+            SharedPreferences.Editor editor = getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE).edit();
+            String uniqueID = UUID.randomUUID().toString();
+            editor.putString("user_id", uniqueID);
+            editor.apply();
+        }
+
         search = findViewById(R.id.trazilica);
-
-//        search.setSubmitButtonEnabled(true);
-
-        /*search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                for(Recept recept: receptiList){
-                    if(recept.getNazivJela().contains(query)){
-                        Log.d(TAG, "onQueryTextSubmit: " + recept.getNazivJela());
-                        receptiQueryList.add(recept);
-                    }
-                }
-                setRecyclerViewPopisRecepata(receptiQueryList);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });*/
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Recepti");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -76,54 +65,71 @@ public class MainActivity extends AppCompatActivity {
                     recept = snapshot.getValue(Recept.class);
                     receptiList.add(recept);
                 }
-
                 setRecyclerViewPopisRecepata(receptiList);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Log.d("Eroor",databaseError.toString());
             }
         });
 
-        btnDodaj = (Button)findViewById(R.id.dodaj);
-        search.addTextChangedListener(new TextWatcher() {
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public boolean onQueryTextSubmit(String query) {
                 receptiQueryList.clear();
                 for(Recept recept: receptiList){
-                    if(recept.getNazivJela().contains(search.getText())){
-                        Log.d(TAG, "onQueryTextSubmit: " + recept.getNazivJela());
+                    if(recept.getNazivJela().toLowerCase().contains(query) || recept.getListaSastojci().toString().toLowerCase().contains(query)){
+                        Log.d("receptprovjera", "onQueryTextSubmit: " + recept.getListaSastojci());
                         receptiQueryList.add(recept);
                     }
                 }
                 setRecyclerViewPopisRecepata(receptiQueryList);
+                return true;
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
+            public boolean onQueryTextChange(String newText) {
+                if(newText.matches("")){
+                    setRecyclerViewPopisRecepata(receptiList);
+                    return true;
+                }
+                receptiQueryList.clear();
+                for(Recept recept: receptiList){
+                    if(recept.getNazivJela().toLowerCase().contains(newText) || recept.getListaSastojci().toString().toLowerCase().contains(newText)){
+                        Log.d("receptprovjera", "onQueryTextSubmit: " + recept.getListaSastojci());
+                        receptiQueryList.add(recept);
+                    }
+                }
+                setRecyclerViewPopisRecepata(receptiQueryList);
+                return true;
             }
         });
+
+        btnDodaj = findViewById(R.id.dodaj);
         btnDodaj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NoviRecept.class);
+                Intent intent = new Intent(MainActivity.this, NoviReceptActivity.class);
                 startActivity(intent);
+
+            }
+        });
+
+        ivFavoriti = findViewById(R.id.favoriti);
+        ivFavoriti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentFavoriti = new Intent(MainActivity.this, FavoritiActivity.class);
+                startActivity(intentFavoriti);
             }
         });
     }
 
     public void setRecyclerViewPopisRecepata(ArrayList<Recept> recepti){
-        Log.d(TAG, "onCreate: " + recepti.size());
         RecyclerView recyclerView = findViewById(R.id.mojRecycler);
-        RecyclerViewPopisRecepata recyclerViewPopisRecepata = new RecyclerViewPopisRecepata(recepti);
-        recyclerView.setAdapter(recyclerViewPopisRecepata);
+        RecyclerViewAdapterPopisRecepata recyclerViewAdapterPopisRecepata = new RecyclerViewAdapterPopisRecepata(recepti, getApplicationContext());
+        recyclerView.setAdapter(recyclerViewAdapterPopisRecepata);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 }

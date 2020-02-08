@@ -1,7 +1,23 @@
 <resources>
     <string name="app_name">Studentska kuharica</string>
-    <string name="dodajStavku">Dodaj</string>
+    <string name="btnDodaj">Dodaj</string>
     <string name="spremi">Spremi</string>
-    <string name="dodajRecept">Dodaj recept</string>
     <string name="hintPretraga">Pretraži</string>
+    <string name="sastojci">SASTOJCI</string>
+    <string name="koraci">KORACI</string>
+    <string name="nazivJela">NAZIV JELA</string>
+    <string name="hintNazivJela">Naziv jela</string>
+    <string name="hintSastojak">Unesite sastojak</string>
+    <string name="hintKorak">Unesite korak</string>
+    <string name="dijeli">Podijeli</string>
+    <string name="ocijeni">Ocijeni</string>
+    <string name="recenzija">Recenzija</string>
+    <string name="komentar">Komentar:</string>
+    <string name="urediRecept">Uredi</string>
+    <string name="obrisiRecept">Obriši</string>
+    <string name="prosjekOcjena">Prosječna ocjena:&#160;</string>
+    <string name="nedostupnaOcjena">N/A</string>
+    <string name="nijeFavorit">Nije favorit</string>
+    <string name="jeFavorit">Favorit</string>
+    <string name="favoriti">Favoriti</string>
 </resources>

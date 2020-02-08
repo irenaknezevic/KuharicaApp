@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Student Cookbook</string>
-    <string name="dodajStavku">ADD</string>
+    <string name="btnDodaj">ADD</string>
     <string name="spremi">Save</string>
-    <string name="dodajRecept">Save recipe</string>
     <string name="hintPretraga">Search</string>
+    <string name="sastojci">INGREDIENTS</string>
+    <string name="koraci">STEPS</string>
+    <string name="nazivJela">NAME OF THE MEAL</string>
+    <string name="hintNazivJela">Name of the meal</string>
+    <string name="hintSastojak">Enter the ingredient</string>
+    <string name="hintKorak">Enter the step</string>
+    <string name="dijeli">Share</string>
+    <string name="ocijeni">Rate</string>
+    <string name="recenzija">Review</string>
+    <string name="komentar">Comment:</string>
+    <string name="urediRecept">Edit</string>
+    <string name="obrisiRecept">Delete</string>
+    <string name="prosjekOcjena">Average rating:&#160;</string>
+    <string name="nedostupnaOcjena">N/A</string>
+    <string name="nijeFavorit">Not a favorite</string>
+    <string name="jeFavorit">Favorite</string>
+    <string name="favoriti">Favorites</string>
 </resources>

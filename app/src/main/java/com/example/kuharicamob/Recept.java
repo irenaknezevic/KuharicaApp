@@ -3,12 +3,21 @@ package com.example.kuharicamob;
 import java.util.ArrayList;
 
 public class Recept {
+    private String  nId;
     private String nazivJela;
     private ArrayList<String> listaSastojci;
     private ArrayList<String> listaKoraci;
+    private String userID;
+    private Float ocjena;
+    private int brojOcjena;
 
-    public Recept() {
 
+    public String getnId() {
+        return nId;
+    }
+
+    public void setnId(String nId) {
+        this.nId = nId;
     }
 
     public String getNazivJela() {
@@ -33,5 +42,31 @@ public class Recept {
 
     public void setListaKoraci(ArrayList<String> listaKoraci) {
         this.listaKoraci = listaKoraci;
+    }
+
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+
+    public float getOcjena() {
+        return ocjena;
+    }
+
+    public void setOcjena(float ocjena) {
+        this.ocjena = ocjena;
+    }
+
+    public int getBrojOcjena() {
+        return brojOcjena;
+    }
+
+    public void setBrojOcjena(int brojOcjena) {
+        this.brojOcjena = brojOcjena;
     }
 }

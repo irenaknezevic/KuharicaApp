@@ -1,53 +1,92 @@
 package com.example.kuharicamob;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class NoviRecept extends AppCompatActivity {
+public class NoviReceptActivity extends AppCompatActivity {
 
-    RecyclerViewAdapter adapterSastojci;
-    RecyclerViewAdapter adapterKoraci;
+    ReceptRecyclerViewAdapter adapterSastojci;
+    ReceptRecyclerViewAdapter adapterKoraci;
     ArrayList<String> lSastojci;
     ArrayList<String> lKoraci;
-    Button btnDodajSastojak;
-    Button btnDodajKorak;
+    ImageButton btnDodajSastojak;
+    ImageButton btnDodajKorak;
     EditText etSastojak;
     EditText etKorak;
     EditText etNazivJela;
     Button btnSpremiRecept;
     DatabaseReference reff;
-    Recept recept;
+    DatabaseReference receptReference;
+    Recept recept = new Recept();
+    String userId;
+    String receptId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novi_recept);
 
+        reff = FirebaseDatabase.getInstance().getReference().child("Recepti");
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        etNazivJela = (EditText) findViewById(R.id.etNazivJela);
+        etNazivJela = findViewById(R.id.etNazivJela);
 
-        btnDodajSastojak = (Button) findViewById(R.id.btnDodajSastojak);
-        etSastojak = (EditText) findViewById(R.id.etSastojak);
+        btnDodajSastojak = findViewById(R.id.btnDodajSastojak);
+        etSastojak = findViewById(R.id.etSastojak);
 
-        btnDodajKorak = (Button) findViewById(R.id.btnDodajKorak);
-        etKorak = (EditText) findViewById(R.id.etKorak);
+        btnDodajKorak = findViewById(R.id.btnDodajKorak);
+        etKorak = findViewById(R.id.etKorak);
 
         lSastojci = new ArrayList<>();
         lKoraci = new ArrayList<>();
+
+        Intent intent = getIntent();
+        if(intent.getExtras() != null && !intent.getExtras().get("idRecepta").toString().matches("")){
+//            Toast.makeText(this, intent.getExtras().get("idRecepta").toString(), Toast.LENGTH_SHORT).show();
+            receptId = intent.getExtras().get("idRecepta").toString();
+            receptReference = reff.child(receptId);
+            receptReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    recept = dataSnapshot.getValue(Recept.class);
+
+                    etNazivJela.setText(recept.getNazivJela());
+
+                    lSastojci.addAll(recept.getListaSastojci());
+                    lKoraci.addAll(recept.getListaKoraci());
+
+                    adapterKoraci.notifyDataSetChanged();
+                    adapterSastojci.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         SetupRecyclerView(R.id.recyclerViewSastojci, lSastojci);
         SetupRecyclerView(R.id.recyclerViewKoraci, lKoraci);
@@ -86,8 +125,8 @@ public class NoviRecept extends AppCompatActivity {
             }
         });
 
-        recept = new Recept();
-        reff = FirebaseDatabase.getInstance().getReference().child("Recepti");
+//        recept = new Recept();
+
 
         btnSpremiRecept = (Button) findViewById(R.id.btnSpremiRecept);
 
@@ -109,7 +148,25 @@ public class NoviRecept extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Niste unijeli sastojke ili korake!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                reff.push().setValue(recept);
+
+                userId = UserData.GetUserID(getApplicationContext());
+
+                if(!userId.matches("")) {
+                    recept.setUserID(userId);
+                }
+
+                String id;
+                if(receptId.isEmpty()){
+                    id = reff.push().getKey();
+                }
+                else{
+                    id = receptId;
+                }
+                recept.setnId(id);
+
+                reff.child(id).setValue(recept);
+
+                finish();
             }
         });
 
@@ -117,7 +174,7 @@ public class NoviRecept extends AppCompatActivity {
 
     public void SetupRecyclerView(int resource, ArrayList<String> lista) {
         RecyclerView rv = findViewById(resource);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(lista);
+        ReceptRecyclerViewAdapter adapter = new ReceptRecyclerViewAdapter(lista, R.layout.list_item);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
