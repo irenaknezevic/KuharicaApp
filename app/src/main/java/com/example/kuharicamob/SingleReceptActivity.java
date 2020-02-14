@@ -74,7 +74,7 @@ public class SingleReceptActivity extends AppCompatActivity {
                 koraci.clear();
                 recept.setnId(dataSnapshot.child("nId").getValue().toString());
                 recept.setNazivJela(dataSnapshot.child("nazivJela").getValue().toString());
-                if(dataSnapshot.child("brojOcjena").getValue(Integer.class) != null) {
+                if(dataSnapshot.child("brojOcjena").getValue(Integer.class) != null && dataSnapshot.child("brojOcjena").getValue(Integer.class) != 0) {
                     recept.setBrojOcjena(dataSnapshot.child("brojOcjena").getValue(Integer.class));
                     recept.setOcjena(dataSnapshot.child("ocjena").getValue(Float.class));
                     tvOcjena.setText(String.valueOf((double)Math.round(recept.getOcjena()*100)/100));

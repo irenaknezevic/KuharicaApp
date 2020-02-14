@@ -102,11 +102,11 @@ public class RecyclerViewAdapterPopisRecepata extends RecyclerView.Adapter<Recyc
             }
         });
 
-        if(viewHolderPopisRecepata.getAdapterPosition() == (getItemCount()-1)) {
+       /* if(viewHolderPopisRecepata. == (getItemCount()-1)) {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) viewHolderPopisRecepata.clRecept.getLayoutParams();
             params.setMargins(10, 10, 10, 150);
             viewHolderPopisRecepata.clRecept.setLayoutParams(params);
-        }
+        }*/
     }
 
     @Override

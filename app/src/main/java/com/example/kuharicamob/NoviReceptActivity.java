@@ -7,13 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -156,7 +154,7 @@ public class NoviReceptActivity extends AppCompatActivity {
                 }
 
                 String id;
-                if(receptId.isEmpty()){
+                if(receptId == null){
                     id = reff.push().getKey();
                 }
                 else{
@@ -164,7 +162,9 @@ public class NoviReceptActivity extends AppCompatActivity {
                 }
                 recept.setnId(id);
 
-                reff.child(id).setValue(recept);
+                if(id != null) {
+                    reff.child(id).setValue(recept);
+                }
 
                 finish();
             }

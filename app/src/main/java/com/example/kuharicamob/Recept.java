@@ -55,7 +55,11 @@ public class Recept {
 
 
     public float getOcjena() {
-        return ocjena;
+        if(ocjena != null)
+        {
+            return ocjena;
+        }
+        return 0;
     }
 
     public void setOcjena(float ocjena) {

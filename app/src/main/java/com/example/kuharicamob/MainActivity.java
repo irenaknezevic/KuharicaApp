@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Recept> receptiQueryList = new ArrayList<>();
     ArrayList<String> listaId = new ArrayList<>();
     ArrayList<String> queryListaId = new ArrayList<>();
-    final String TAG = "MainActivityLog";
 
     FloatingActionButton btnDodaj;
 
